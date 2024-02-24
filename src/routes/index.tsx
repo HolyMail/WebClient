@@ -1,21 +1,24 @@
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 
+export const onGet: RequestHandler = ({ redirect }) => {
+  throw redirect(302, "inbox/");
+}
 
 export default component$(() => {
   return (
     <>
-    <h1>ciao</h1>
+      hi
     </>
   );
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "HolyMail Web",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content: "HolyMail web application",
     },
   ],
 };
