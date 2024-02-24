@@ -29,7 +29,7 @@ const base_endpoint = "https://localhost:7018/emails";
 const imapOptions: ImapOptions = {
     body: {
         emailsCount: 50,
-        offset: 5400,
+        offset: 0,
         user: "",
         credentials: "",
     },
@@ -37,11 +37,13 @@ const imapOptions: ImapOptions = {
     lastFetched: -1,
 };
 
+let stopRequested = false;
+
 self.addEventListener("message", async (event) => {
     const { data } = event;
     const { operation, loginOptions } = data;
 
-    let stopRequested = false;
+    console.log(operation);
 
     switch(operation) {
         case "init": 
@@ -61,6 +63,9 @@ self.addEventListener("message", async (event) => {
                 imapOptions.body.credentials = options.password;
                 imapOptions.endpoint = `${base_endpoint}/apple/list`;
             }
+            
+            stopRequested = false;
+
             break;
         }
         case "start":
@@ -79,7 +84,6 @@ self.addEventListener("message", async (event) => {
         case "stop":
         {
             stopRequested = true;
-
             break;
         }
     }
